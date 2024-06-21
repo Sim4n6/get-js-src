@@ -56,7 +56,7 @@ def download_js_files(js_urls, output_dir):
         content = requests.get(js_url).content
 
         # generate a hash from the content of the script tag
-        hash = hashlib.md5(content.encode()).hexdigest()
+        hash = hashlib.md5(content).hexdigest()
         filename = hash + ".js"
 
         # Download the file
