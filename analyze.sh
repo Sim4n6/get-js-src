@@ -19,11 +19,6 @@ fi
 # echo "$url" | getJS --resolve --verbose --complete --insecure | tee "./targets/$directory/js.files" | sort -u | wget -N -P "./targets/$directory/js_files/" -i -
 python3 getjssrc.py "$url" "./targets/$directory/js_files/"
 
-# rename if necessary 
-for jsfile in $(ls ./targets/$directory/js_files); do
-  mv "./targets/$directory/js_files/$jsfile" "./targets/$directory/js_files/$(basename $jsfile | cut -d'?' -f1)"
-done
-
 # beautify the target JS file
 for jsfile in $(ls ./targets/$directory/js_files); do
   js-beautify --replace  "./targets/$directory/js_files/$jsfile"
