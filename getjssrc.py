@@ -51,6 +51,12 @@ def process_js_urls(js_urls, url):
 def download_js_files(js_urls, output_dir):
     for js_url in js_urls:
         filename = js_url.split('/')[-1]
+
+        # Omit unusual filenames like 'script.js?ver=1.0'
+        if not filename.endswith('.js') and '.js' in filename:
+            filename = filename.split('.js')[0] + '.js'
+
+        # Download the file
         with open(os.path.join(output_dir, filename), 'wb') as f:
             f.write(requests.get(js_url).content)
 
