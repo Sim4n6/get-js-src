@@ -20,6 +20,9 @@ def extract_js_urls(html_content, output_dir):
         hash = hashlib.md5(script.text.encode()).hexdigest()
         filename = hash + ".js"
 
+        # print 'processing the filename'
+        print("Processing the filename: " + filename, flush=True)
+
         # create a file and write the content of the script tag to the file
         with open(os.path.join(output_dir, filename), "w") as f:
             f.write(script.text)
@@ -40,8 +43,11 @@ def process_js_urls(js_urls, url):
 
     js_urls_processed = []
     for js_url in js_urls:
+        print(js_url, flush=True)
         if js_url.startswith("http"):
             js_urls_processed.append(js_url)
+        elif js_url.startswith("////"):
+            js_urls_processed.append("https:" + js_url[2:])
         elif js_url.startswith("//"):
             js_urls_processed.append("https:" + js_url)
         else:
@@ -58,6 +64,9 @@ def download_js_files(js_urls, output_dir):
         # generate a hash from the content of the script tag
         hash = hashlib.md5(content).hexdigest()
         filename = hash + ".js"
+
+        # print 'processing the filename'
+        print("Processing the filename: " + filename, flush=True)
 
         # Download the file
         with open(os.path.join(output_dir, filename), "wb") as f:
